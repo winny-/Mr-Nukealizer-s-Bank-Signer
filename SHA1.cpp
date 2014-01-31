@@ -1,21 +1,21 @@
 
 #include "stdafx.h"
 
-void SHA1ProcessChunk(BYTE* data, UINT32* hash)
+void SHA1ProcessChunk(unsigned char* data, uint32_t* hash)
 {	
 	/*this function will be very confusing if you don't know how to calculate an SHA-1 hash.
 	/*therefore i suggest you read this: http://en.wikipedia.org/wiki/SHA-1 before trying to make sense of this.*/
 
-	UINT32 A = hash[0];
-	UINT32 B = hash[1];
-	UINT32 C = hash[2];
-	UINT32 D = hash[3];
-	UINT32 E = hash[4];
-	UINT32 F;
-	UINT32 Temp;
-	UINT32 W[80];
+	uint32_t A = hash[0];
+	uint32_t B = hash[1];
+	uint32_t C = hash[2];
+	uint32_t D = hash[3];
+	uint32_t E = hash[4];
+	uint32_t F;
+	uint32_t Temp;
+	uint32_t W[80];
 
-	UINT32 i = 0;
+	uint32_t i = 0;
 	while (i < 16)
 	{	
 		Temp = 0;
@@ -89,7 +89,7 @@ void SHA1ProcessChunk(BYTE* data, UINT32* hash)
 	hash[4] += E;
 }
 
-UINT32 ROL(UINT32 x, int count)
+uint32_t ROL(uint32_t x, int count)
 {
 	return ((x << count) | (x >> (0x20 - count)));
 }

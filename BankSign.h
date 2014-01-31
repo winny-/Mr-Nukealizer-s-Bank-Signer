@@ -7,19 +7,19 @@
 // that uses this DLL. This way any other project whose source files include this file see 
 // BANKSIGN_API functions as being imported from a DLL, whereas this DLL sees symbols
 // defined with this macro as being exported.
-#ifdef BANKSIGN_EXPORTS
-#define BANKSIGN_API __declspec(dllexport)
-#else
-#define BANKSIGN_API __declspec(dllimport)
-#endif
+// #ifdef BANKSIGN_EXPORTS
+// #define BANKSIGN_API __declspec(dllexport)
+// #else
+// #define BANKSIGN_API __declspec(dllimport)
+// #endif
 
-extern "C" BANKSIGN_API void Sign(const char* authorAccountNumber, const char* userAccountNumber, const char* bankName, const char* bankData, char* destination, int destinationSize);
-extern "C" BANKSIGN_API void SignFromString(const char* sigInputString, const char* bankData, char* destination, int destinationSize);
+void Sign(const char* authorAccountNumber, const char* userAccountNumber, const char* bankName, const char* bankData, char* destination, int destinationSize);
+void SignFromString(const char* sigInputString, const char* bankData, char* destination, int destinationSize);
 
-extern "C" BANKSIGN_API void GetSigInputString(const char* authorAccountNumber, const char* userAccountNumber, const char* bankName, const char* bankData, char* stringBuffer, int destinationSize);
+void GetSigInputString(const char* authorAccountNumber, const char* userAccountNumber, const char* bankName, const char* bankData, char* stringBuffer, int destinationSize);
 
-extern "C" BANKSIGN_API void GetNewSigFromString(const char* sigInputString, char* sigBuffer, int destinationSize);
-extern "C" BANKSIGN_API void GetNewSig(const char* authorAccountNumber, const char* userAccountNumber, const char* bankName, const char* bankData, char* sigBuffer, int destinationSize);
-extern "C" BANKSIGN_API void GetCurrentSig(const char* bankData, char* sigBuffer, int destinationSize);
+void GetNewSigFromString(const char* sigInputString, char* sigBuffer, int destinationSize);
+void GetNewSig(const char* authorAccountNumber, const char* userAccountNumber, const char* bankName, const char* bankData, char* sigBuffer, int destinationSize);
+void GetCurrentSig(const char* bankData, char* sigBuffer, int destinationSize);
 
 #endif

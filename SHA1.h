@@ -4,7 +4,7 @@
 
 #include "stdafx.h"
 
-void SHA1ProcessChunk(BYTE* data, UINT32* hash);
-UINT32 ROL(UINT32 x, int count);
+void SHA1ProcessChunk(unsigned char* data, uint32_t* hash);
+uint32_t ROL(uint32_t x, int count);
 
 #endif

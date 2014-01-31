@@ -28,19 +28,19 @@ string GetHash(Signature* sig)
 	
 void Finalize(Signature* sig)
 {
-	UINT32 PaddingLength = ((0xfffffff7 - (sig->length / 8)) % 64) + 1; //the number of bytes that need to be added before the length data
+	uint32_t PaddingLength = ((0xfffffff7 - (sig->length / 8)) % 64) + 1; //the number of bytes that need to be added before the length data
 	                                                                    //to make the total length a multiple of 64 bytes
-	BYTE* Padding = new BYTE[PaddingLength];
-	BYTE LengthInBits[8];
+	unsigned char* Padding = new unsigned char[PaddingLength];
+	unsigned char LengthInBits[8];
 
 	Padding[0] = 128; //add a 1 bit to the beginning of padding
-	for (UINT32 i = 1; i < PaddingLength; i++)
+	for (uint32_t i = 1; i < PaddingLength; i++)
 	{
 		Padding[i] = 0; //zero the rest
 	}
 	
 	for (int i = 0; i < 8; i++) //sig->length is stored little-endian, but we need big-endian
-		LengthInBits[i] = ((BYTE*)&(sig->length))[7 - i];
+		LengthInBits[i] = ((unsigned char*)&(sig->length))[7 - i];
 	
 	AppendText(sig, Padding, PaddingLength); //add padding
 	AppendText(sig, LengthInBits, 8); //add length data
@@ -49,18 +49,18 @@ void Finalize(Signature* sig)
 	delete[] Padding; //no memory leaks allowed!
 }
 
-void AppendText(Signature* sig, BYTE* text, UINT32 length)
+void AppendText(Signature* sig, unsigned char* text, uint32_t length)
 {
-	sig->length += ((UINT64) length) * 8; //add the length of the new data to the old length
+	sig->length += ((uint64_t) length) * 8; //add the length of the new data to the old length
 
-	for (UINT32 i = 0; i < length; i++)
+	for (uint32_t i = 0; i < length; i++)
 		sig->data.push_back(text[i]); //add the new text one character at a time
 }
 
 void Encrypt(Signature* sig)
 {
 	int NumBlocks = (int) (sig->length / 512); //the number of 64 byte blocks of data
-	BYTE MessageBlock[64]; //temporary storage for the current block
+	unsigned char MessageBlock[64]; //temporary storage for the current block
 	                       //because i don't know if it is safe to use a vector the way we need to use the data
 
 	for (int i = 0; i < NumBlocks; i++) //for each block
